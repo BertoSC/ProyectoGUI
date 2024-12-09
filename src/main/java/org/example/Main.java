@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.modelos.PdfReportGenerator;
+
 import javax.swing.*;
 import java.sql.*;
 
@@ -11,6 +13,7 @@ public class Main {
             @Override
             public void run() {
                 new Ventana(con).setVisible(true);
+                PdfReportGenerator.generarInforme();
             }
         });
     }
