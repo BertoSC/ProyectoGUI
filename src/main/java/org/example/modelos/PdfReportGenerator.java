@@ -6,6 +6,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.properties.TextAlignment;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,23 +22,27 @@ public class PdfReportGenerator {
     }
 
     public static void generarInforme() {
-        String url = "jdbc:sqlite:C:\\Users\\a23albertogc\\Desktop\\BARBERIA\\Barber";
+        // Cambiar la URL de la base de datos cuando la crees con los scripts
+        String url = "jdbc:sqlite:C:\\Users\\VSPC-BLACKFRIDAY\\Desktop\\DI\\centromedico";
         String usuario = "";
         String contraseña = "";
 
         try (Connection conn = DriverManager.getConnection(url, usuario, contraseña)) {
 
             // Crear el documento PDF
-            PdfWriter writer = new PdfWriter(new FileOutputStream("informe_completo.pdf"));
+            PdfWriter writer = new PdfWriter(new FileOutputStream("informe_centromedico.pdf"));
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
 
             // Título del informe
-            Paragraph titulo = new Paragraph("Informe Completo de la Base de Datos")
+            Paragraph titulo = new Paragraph("Centro médico: informe de datos actuales")
                     .setFontSize(18)
                     .setBold()
                     .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER);
             document.add(titulo);
+
+            // Espacio antes de la tabla de pacientes
+            document.add(new Paragraph("\n"));
 
             // TABLA: Pacientes
             document.add(new Paragraph("Pacientes").setBold().setFontSize(14));
@@ -66,6 +71,9 @@ public class PdfReportGenerator {
             }
             document.add(tablaPacientes);
 
+            // Espacio antes de la tabla de pacientes
+            document.add(new Paragraph("\n"));
+
             // TABLA: Doctores
             document.add(new Paragraph("Doctores").setBold().setFontSize(14));
             Table tablaDoctores = new Table(5);  // Columnas correspondientes
@@ -88,6 +96,9 @@ public class PdfReportGenerator {
                 }
             }
             document.add(tablaDoctores);
+
+            // Espacio antes de la tabla de pacientes
+            document.add(new Paragraph("\n"));
 
             // TABLA: Citas médicas
             document.add(new Paragraph("Citas Médicas").setBold().setFontSize(14));
@@ -114,6 +125,9 @@ public class PdfReportGenerator {
             }
             document.add(tablaCitas);
 
+            // Espacio antes de la tabla de pacientes
+            document.add(new Paragraph("\n"));
+
             // TABLA: Consultas
             document.add(new Paragraph("Consultas").setBold().setFontSize(14));
             Table tablaConsultas = new Table(5);  // Columnas correspondientes
@@ -137,9 +151,12 @@ public class PdfReportGenerator {
             }
             document.add(tablaConsultas);
 
+            // Espacio antes de la tabla de pacientes
+            document.add(new Paragraph("\n"));
+
             // TABLA: Recetas
             document.add(new Paragraph("Recetas").setBold().setFontSize(14));
-            Table tablaRecetas = new Table(3);  // Columnas correspondientes
+            Table tablaRecetas = new Table(3);
             tablaRecetas.addCell("ID");
             tablaRecetas.addCell("Medicamento");
             tablaRecetas.addCell("Dosis");
@@ -159,7 +176,7 @@ public class PdfReportGenerator {
             // Cerrar el documento
             document.close();
 
-            System.out.println("Informe completo generado correctamente!");
+            System.out.println("Informe generado correctamente");
 
         } catch (Exception e) {
             e.printStackTrace();

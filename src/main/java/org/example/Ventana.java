@@ -52,6 +52,14 @@ public class Ventana extends JFrame {
         buttonPanel.add(btnAddCita);
 
         add(buttonPanel, BorderLayout.NORTH);
+        JPanel buttonPanelPDF = new JPanel(new GridLayout(1, 1));
+        JButton descargarPDF = new JButton("DESCARGAR INFORME DE DATOS");
+        buttonPanelPDF.add(descargarPDF);
+        add(buttonPanelPDF, BorderLayout.SOUTH);
+
+        descargarPDF.addActionListener(e -> {
+            PdfReportGenerator.generarInforme();
+        });
 
 
         // Crear tabla
