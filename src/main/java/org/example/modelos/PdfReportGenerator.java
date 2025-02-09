@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.io.FileOutputStream;
+import java.time.LocalDate;
 
 public class PdfReportGenerator {
     Connection con;
@@ -41,6 +42,16 @@ public class PdfReportGenerator {
                     .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER);
             document.add(titulo);
 
+
+            document.add(new Paragraph("\n"));
+
+            LocalDate fechaActual = LocalDate.now();
+            document.add(new Paragraph("Fecha de emisión: "+fechaActual.toString()));
+
+            document.add(new Paragraph("\n"));
+
+            document.add(new Paragraph("Resumen de actividad del centro médico para llevar el seguimiento de médicos en activo, pacientes atendidos, " +
+                    "consultas realizadas y recetas emitidas."));
 
             document.add(new Paragraph("\n"));
 
