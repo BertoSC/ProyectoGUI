@@ -25,7 +25,7 @@ public class Ventana extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Crear panel de botones
+
         JPanel buttonPanel = new JPanel(new GridLayout(2, 5));
         JButton btnMostrarDoctores = new JButton("Mostrar Doctores");
         JButton btnMostrarPacientes = new JButton("Mostrar Pacientes");
@@ -62,11 +62,10 @@ public class Ventana extends JFrame {
         });
 
 
-        // Crear tabla
+
         tableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
-                // Permitir edición en todas las columnas excepto las que contienen botones
                 return !(getColumnClass(column).equals(JButton.class));
             }
         };
@@ -75,7 +74,7 @@ public class Ventana extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
 
-        // Acciones de los botones
+
         btnMostrarDoctores.addActionListener(e -> mostrarDoctores());
         btnMostrarPacientes.addActionListener(e -> mostrarPacientes());
         btnMostrarConsultas.addActionListener(e -> mostrarConsultas());
@@ -338,7 +337,7 @@ public class Ventana extends JFrame {
         dialog.add(txtIdDoctor);
         dialog.add(lblIdPaciente);
         dialog.add(txtIdPaciente);
-        dialog.add(new JLabel()); // Espacio vacío
+        dialog.add(new JLabel());
         dialog.add(btnGuardar);
         dialog.setLocationRelativeTo(this);
         dialog.pack();
@@ -346,7 +345,6 @@ public class Ventana extends JFrame {
     }
 
 
-    // Métodos para mostrar datos
     private void mostrarDoctores() {
         DoctorDAO doctorDAO = new DoctorDAO(con);
         List<Doctor> doctores = doctorDAO.getAll();
@@ -376,7 +374,7 @@ public class Ventana extends JFrame {
         PacienteDAO pacienteDAO = new PacienteDAO(con);
         List<Paciente> pacientes = pacienteDAO.getAll();
 
-        // Actualizar columnas con todos los atributos de Paciente
+
         tableModel.setRowCount(0);
         tableModel.setColumnIdentifiers(new Object[]{
                 "ID", "Historia Clínica", "Nombre", "Apellidos", "DNI",
@@ -396,7 +394,7 @@ public class Ventana extends JFrame {
                     btnEliminar, btnActualizar});
         }
 
-        // Renderizar y editar botones
+
         table.getColumnModel().getColumn(9).setCellRenderer(new ButtonRenderer());
         table.getColumnModel().getColumn(9).setCellEditor(new ButtonEditor());
 
@@ -473,8 +471,6 @@ public class Ventana extends JFrame {
         table.getColumnModel().getColumn(7).setCellEditor(new ButtonEditor());
     }
 
-
-    // Métodos para eliminar datos
     private void eliminarDoctor(int id) {
         new DoctorDAO(con).delete(id);
         mostrarDoctores();
@@ -501,8 +497,6 @@ public class Ventana extends JFrame {
     }
 
 
-
-    // Métodos para actualizar datos
     private void actualizarDoctor(int id) {
         int row = table.getSelectedRow();
         if (row != -1) {
@@ -525,7 +519,6 @@ public class Ventana extends JFrame {
     private void actualizarPaciente(int id) {
         int row = table.getSelectedRow();
         if (row != -1) {
-            // Recuperar datos de la fila seleccionada
             int historiaClinica = (int) tableModel.getValueAt(row, 1);
             String nombre = (String) tableModel.getValueAt(row, 2);
             String apellidos = (String) tableModel.getValueAt(row, 3);
@@ -594,7 +587,6 @@ public class Ventana extends JFrame {
         }
     }
 
-    // Clases internas para renderizar y editar botones
     private static class ButtonRenderer extends JButton implements TableCellRenderer {
         public ButtonRenderer() {
             setOpaque(true);

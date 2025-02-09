@@ -29,24 +29,24 @@ public class PdfReportGenerator {
 
         try (Connection conn = DriverManager.getConnection(url, usuario, contraseña)) {
 
-            // Crear el documento PDF
+
             PdfWriter writer = new PdfWriter(new FileOutputStream("informe_centromedico.pdf"));
             PdfDocument pdf = new PdfDocument(writer);
             Document document = new Document(pdf);
 
-            // Título del informe
+
             Paragraph titulo = new Paragraph("Centro médico: informe de datos actuales")
                     .setFontSize(18)
                     .setBold()
                     .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER);
             document.add(titulo);
 
-            // Espacio antes de la tabla de pacientes
+
             document.add(new Paragraph("\n"));
 
-            // TABLA: Pacientes
+
             document.add(new Paragraph("Pacientes").setBold().setFontSize(14));
-            Table tablaPacientes = new Table(7);  // Columnas correspondientes
+            Table tablaPacientes = new Table(7);
             tablaPacientes.addCell("ID");
             tablaPacientes.addCell("Historia Clínica");
             tablaPacientes.addCell("Nombre");
@@ -71,12 +71,12 @@ public class PdfReportGenerator {
             }
             document.add(tablaPacientes);
 
-            // Espacio antes de la tabla de pacientes
+
             document.add(new Paragraph("\n"));
 
-            // TABLA: Doctores
+
             document.add(new Paragraph("Doctores").setBold().setFontSize(14));
-            Table tablaDoctores = new Table(5);  // Columnas correspondientes
+            Table tablaDoctores = new Table(5);
             tablaDoctores.addCell("ID");
             tablaDoctores.addCell("Número Colegiado");
             tablaDoctores.addCell("Nombre");
@@ -97,12 +97,12 @@ public class PdfReportGenerator {
             }
             document.add(tablaDoctores);
 
-            // Espacio antes de la tabla de pacientes
+
             document.add(new Paragraph("\n"));
 
-            // TABLA: Citas médicas
+
             document.add(new Paragraph("Citas Médicas").setBold().setFontSize(14));
-            Table tablaCitas = new Table(6);  // Columnas correspondientes
+            Table tablaCitas = new Table(6);
             tablaCitas.addCell("ID");
             tablaCitas.addCell("Fecha");
             tablaCitas.addCell("Motivo Consulta");
@@ -125,12 +125,11 @@ public class PdfReportGenerator {
             }
             document.add(tablaCitas);
 
-            // Espacio antes de la tabla de pacientes
             document.add(new Paragraph("\n"));
 
-            // TABLA: Consultas
+
             document.add(new Paragraph("Consultas").setBold().setFontSize(14));
-            Table tablaConsultas = new Table(5);  // Columnas correspondientes
+            Table tablaConsultas = new Table(5);
             tablaConsultas.addCell("ID");
             tablaConsultas.addCell("Diagnóstico");
             tablaConsultas.addCell("Tratamiento");
@@ -151,10 +150,9 @@ public class PdfReportGenerator {
             }
             document.add(tablaConsultas);
 
-            // Espacio antes de la tabla de pacientes
             document.add(new Paragraph("\n"));
 
-            // TABLA: Recetas
+
             document.add(new Paragraph("Recetas").setBold().setFontSize(14));
             Table tablaRecetas = new Table(3);
             tablaRecetas.addCell("ID");
@@ -173,7 +171,6 @@ public class PdfReportGenerator {
             }
             document.add(tablaRecetas);
 
-            // Cerrar el documento
             document.close();
 
             System.out.println("Informe generado correctamente");
